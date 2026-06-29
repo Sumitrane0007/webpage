@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Veracitiz 15 Years Celebration</title>
+ 
+<style>
+
+html, body {
+
+    margin: 0;
+
+    padding: 0;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    font-family: Arial, sans-serif;
+
+    background: radial-gradient(circle, #1a0000, #000000);
+
+    color: white;
+
+}
+ 
+/* CENTER */
+
+.center {
+
+    height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+ 
+/* TITLE */
+
+h1 {
+
+    font-size: 40px;
+
+    font-weight: 900;
+
+    text-shadow: 0 0 20px red, 0 0 40px gold;
+
+}
+ 
+/* BUTTON */
+
+button {
+
+    padding: 14px 28px;
+
+    font-size: 18px;
+
+    background: gold;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+ 
+/* COUNTDOWN */
+
+#count {
+
+    font-size: 140px;
+
+    color: gold;
+
+    text-shadow: 0 0 30px red;
+
+    font-weight: 900;
+
+}
+ 
+#msg {
+
+    font-size: 22px;
+
+    color: #ffcc00;
+
+}
+ 
+/* GET READY TEXT */
+
+#getReady {
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    color: white;
+
+    margin-bottom: 20px;
+
+    animation: pulse 1s infinite;
+
+}
+ 
+@keyframes pulse {
+
+    0% { opacity: 0.5; }
+
+    50% { opacity: 1; }
+
+    100% { opacity: 0.5; }
+
+}
+ 
+/* GLITTER TEXT */
+
+.glitter {
+
+    font-weight: 900;
+
+    font-size: 42px;
+
+    background: linear-gradient(90deg, gold, white, red, gold);
+
+    background-size: 300%;
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation: shine 2s infinite linear;
+
+}
+ 
+@keyframes shine {
+
+    0% { background-position: 0%; }
+
+    100% { background-position: 300%; }
+
+}
+ 
+/* 🎭 CURTAINS */
+
+.curtain {
+
+    position: absolute;
+
+    width: 52%;
+
+    height: 100%;
+
+    top: 0;
+
+    z-index: 10;
+ 
+    background:
+
+        radial-gradient(circle at 20% 20%, #ff4d4d, transparent 30%),
+
+        radial-gradient(circle at 80% 30%, #b30000, transparent 35%),
+
+        radial-gradient(circle at 50% 70%, #ff1a1a, transparent 40%),
+
+        linear-gradient(90deg, #5c0000, #b30000, #ff1a1a, #7a0000);
+ 
+    background-size: 200% 200%;
+
+    animation: curtainMove 6s ease-in-out infinite;
+ 
+    box-shadow: inset -20px 0 40px rgba(0,0,0,0.6),
+
+                inset 20px 0 40px rgba(0,0,0,0.6);
+
+}
+ 
+#leftCurtain { left: 0; }
+
+#rightCurtain { right: 0; }
+ 
+.open #leftCurtain {
+
+    transform: translateX(-100%);
+
+    transition: transform 2s ease-in-out;
+
+}
+ 
+.open #rightCurtain {
+
+    transform: translateX(100%);
+
+    transition: transform 2s ease-in-out;
+
+}
+ 
+@keyframes curtainMove {
+
+    0% { background-position: 0% 50%; }
+
+    50% { background-position: 100% 50%; }
+
+    100% { background-position: 0% 50%; }
+
+}
+ 
+/* CONFETTI */
+
+.confetti {
+
+    position: absolute;
+
+    width: 8px;
+
+    height: 12px;
+
+    top: -10px;
+
+    animation: fall linear forwards;
+
+}
+ 
+@keyframes fall {
+
+    to { transform: translateY(100vh) rotate(720deg); }
+
+}
+ 
+/* 🎬 BOLLYWOOD TEXT DESIGN */
+
+.bollywood-container {
+
+    text-align: center;
+
+    line-height: 1.2;
+
+}
+ 
+.it {
+
+    font-size: 40px;
+
+    font-style: italic;
+
+    color: white;
+
+}
+ 
+.bollywood {
+
+    font-size: 80px;
+
+    font-weight: 900;
+
+    color: gold;
+
+    text-shadow: 0 0 25px red, 0 0 50px black;
+
+}
+ 
+.theme {
+
+    font-size: 45px;
+
+    font-style: italic;
+
+    color: #ffcc00;
+
+}
+</style>
+</head>
+ 
+<body>
+ 
+<!-- INTRO -->
+<div class="center" id="intro">
+<h1>🎬 Veracitiz 15 Years Annual Event Celebration 🎬</h1>
+<button onclick="startCountdown()">Click to Reveal 🎬</button>
+</div>
+ 
+
+<!-- COUNTDOWN -->
+<div class="center" id="countdown" style="display:none;">
+    <div id="getReady">Get Ready...</div>
+    <!-- Kept empty initially so a static "5" doesn't just sit there awkwardly -->
+    <div id="count"></div> 
+    <div id="msg"></div>
+</div>
+ 
+<!-- CURTAIN REVEAL -->
+<div id="curtainPage" style="display:none;">
+<div id="leftCurtain" class="curtain"></div>
+<div id="rightCurtain" class="curtain"></div>
+ 
+    <div class="center">
+<div class="bollywood-container">
+<div class="it">It's</div>
+<div class="bollywood">BOLLYWOOD</div>
+<div class="theme">Theme</div>
+</div>
+ 
+        <p style="font-size:26px;font-weight:900;margin-top:20px;">
+
+            VERACITIZ 15 YEARS CELEBRATION
+</p>
+ 
+        <p style="font-size:20px;">📅 Date: 7th August</p>
+<p style="font-size:20px;">📍 Venue: Nashik</p>
+<p style="color:gold;font-size:18px;font-weight:bold;">
+
+            Lights • Drama • Dance • Celebration • Legacy 🎭
+</p>
+</div>
+</div>
+
+<!-- ... Keep all your HTML and CSS exactly the same above this ... -->
+
+<script>
+let count = 5;
+let selectedVoice = null;
+
+const messages = {
+    5: "Picture abhi baaki hai mere dost...",
+    4: "Bade bade shehron mein aisi chhoti baatein hoti rehti hai...",
+    3: "Lights... Camera... Action...",
+    2: "Yeh sirf trailer nahi, ek dhamaka hai...",
+    1: "Ab hoga asli reveal..."
+};
+
+// 🔊 LOAD AND FILTER BEST AVAILABLE VOICES
+function loadVoices() {
+    let voices = speechSynthesis.getVoices();
+    
+    // Looks for high-quality natural voices built into Chrome/Edge/Safari
+    selectedVoice = voices.find(voice => 
+        (voice.name.includes("Google") || voice.name.includes("Natural")) && voice.lang.startsWith("en")
+    ) || voices.find(voice => voice.lang.startsWith("en")) || voices[0];
+}
+
+// Map the event listener for browsers to load voices properly
+if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = loadVoices;
+} else {
+    loadVoices();
+}
+
+function speak(text, callback) {
+    let msg = new SpeechSynthesisUtterance(text);
+    
+    // Assign the better voice if found
+    if (selectedVoice) {
+        msg.voice = selectedVoice;
+    }
+    
+    msg.rate = 1.15; // Balanced pace for the lines
+    msg.pitch = 1.0; 
+    
+    if (callback) {
+        msg.onend = callback;
+    }
+    
+    speechSynthesis.speak(msg);
+}
+
+function startCountdown() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("countdown").style.display = "flex";
+    
+    document.getElementById("count").innerText = "";
+    document.getElementById("msg").innerText = "";
+    
+    speak("Get ready for the reveal", () => {
+        runCountdownStep();
+    });
+}
+
+function runCountdownStep() {
+    if (count > 0) {
+        document.getElementById("count").innerText = count;
+        document.getElementById("msg").innerText = messages[count];
+        
+        speak(count.toString(), () => {
+            count--;
+            setTimeout(runCountdownStep, 300); 
+        });
+    } else {
+        showCurtain();
+    }
+}
+
+function createPaper() {
+    for (let i = 0; i < 150; i++) {
+        let c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * window.innerWidth + "px";
+        c.style.background = ["red","gold","white","orange"][Math.floor(Math.random()*4)];
+        c.style.animationDuration = (Math.random()*3 + 2) + "s";
+        document.body.appendChild(c);
+    }
+}
+
+function showCurtain() {
+    document.getElementById("countdown").style.display = "none";
+    document.getElementById("curtainPage").style.display = "block";
+    
+    speak("And the Theme for the event is......", () => {
+        document.getElementById("curtainPage").classList.add("open");
+        createPaper();
+    });
+}
+</script>
+</body>
+</html> 
+
+</body>
+</html>
+ 
