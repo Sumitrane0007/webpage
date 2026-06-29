@@ -328,6 +328,7 @@ button {
 <script>
 let count = 5;
 let selectedVoice = null;
+let voicesLoaded = false;
 
 const messages = {
     5: "Picture abhi baaki hai mere dost...",
@@ -340,29 +341,38 @@ const messages = {
 // 🔊 LOAD AND FILTER BEST AVAILABLE VOICES
 function loadVoices() {
     let voices = speechSynthesis.getVoices();
+    if (voices.length === 0) return; // Wait if the browser isn't ready yet
     
-    // Looks for high-quality natural voices built into Chrome/Edge/Safari
+    // Look for a high-quality English voice (Google, Microsoft, or Apple Male)
     selectedVoice = voices.find(voice => 
-        (voice.name.includes("Google") || voice.name.includes("Natural")) && voice.lang.startsWith("en")
+        (voice.name.includes("Google") || voice.name.includes("Natural") || voice.name.includes("Male")) && voice.lang.startsWith("en")
     ) || voices.find(voice => voice.lang.startsWith("en")) || voices[0];
+    
+    voicesLoaded = true;
 }
 
-// Map the event listener for browsers to load voices properly
-if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = loadVoices;
-} else {
+// Crucial for GitHub/Online hosting: triggers as soon as the browser populates the voice list
+if (typeof speechSynthesis !== 'undefined') {
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    // Call it immediately for browsers that load it instantly (like your local env)
     loadVoices();
 }
 
 function speak(text, callback) {
+    // If GitHub is being incredibly slow, try to grab the voice one more time right before speaking
+    if (!voicesLoaded) {
+        loadVoices();
+    }
+
     let msg = new SpeechSynthesisUtterance(text);
     
-    // Assign the better voice if found
     if (selectedVoice) {
         msg.voice = selectedVoice;
     }
     
-    msg.rate = 1.15; // Balanced pace for the lines
+    msg.rate = 1.15;
     msg.pitch = 1.0; 
     
     if (callback) {
