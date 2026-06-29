@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Veracitiz 15 Years Celebration</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle, #1a0000, #000000);
+    color: white;
+}
+
+/* CENTER */
+.center {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* TITLE */
+h1 {
+    font-size: 40px;
+    font-weight: 900;
+    text-shadow: 0 0 20px red, 0 0 40px gold;
+}
+
+/* BUTTON */
+button {
+    padding: 14px 28px;
+    font-size: 18px;
+    background: gold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* COUNTDOWN */
+#count {
+    font-size: 140px;
+    color: gold;
+    text-shadow: 0 0 30px red;
+    font-weight: 900;
+}
+
+#msg {
+    font-size: 22px;
+    color: #ffcc00;
+}
+
+/* GLITTER TEXT */
+.glitter {
+    font-weight: 900;
+    font-size: 42px;
+    background: linear-gradient(90deg, gold, white, red, gold);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 2s infinite linear;
+}
+
+@keyframes shine {
+    0% { background-position: 0%; }
+    100% { background-position: 300%; }
+}
+
+/* 🎭 REALISTIC THEATRE CURTAINS */
+.curtain {
+    position: absolute;
+    width: 52%;
+    height: 100%;
+    top: 0;
+    z-index: 10;
+
+    background:
+        radial-gradient(circle at 20% 20%, #ff4d4d, transparent 30%),
+        radial-gradient(circle at 80% 30%, #b30000, transparent 35%),
+        radial-gradient(circle at 50% 70%, #ff1a1a, transparent 40%),
+        linear-gradient(90deg, #5c0000, #b30000, #ff1a1a, #7a0000);
+
+    background-size: 200% 200%;
+    animation: curtainMove 6s ease-in-out infinite;
+
+    box-shadow: inset -20px 0 40px rgba(0,0,0,0.6),
+                inset 20px 0 40px rgba(0,0,0,0.6);
+}
+
+/* LEFT & RIGHT */
+#leftCurtain {
+    left: 0;
+    border-right: 3px solid rgba(255,215,0,0.4);
+}
+
+#rightCurtain {
+    right: 0;
+    border-left: 3px solid rgba(255,215,0,0.4);
+}
+
+/* OPEN ANIMATION */
+.open #leftCurtain {
+    transform: translateX(-100%) rotateY(10deg);
+    transition: transform 2s cubic-bezier(.77,0,.18,1);
+}
+
+.open #rightCurtain {
+    transform: translateX(100%) rotateY(-10deg);
+    transition: transform 2s cubic-bezier(.77,0,.18,1);
+}
+
+/* FABRIC FLOW */
+@keyframes curtainMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* CONFETTI */
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    top: -10px;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh) rotate(720deg); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div class="center" id="intro">
+    <h1>🎬 Veracitiz 15 Years Annual Event Celebration 🎬</h1>
+    <button onclick="startCountdown()">Enter Experience ▶</button>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="center" id="countdown" style="display:none;">
+    <div id="count">5</div>
+    <div id="msg">Get ready...</div>
+</div>
+
+<!-- CURTAIN REVEAL -->
+<div id="curtainPage" style="display:none;">
+    <div id="leftCurtain" class="curtain"></div>
+    <div id="rightCurtain" class="curtain"></div>
+
+    <div class="center">
+        <h1 class="glitter">🎬 BOLLYWOOD THEME REVEALED 🎬</h1>
+        <p style="font-size:26px;font-weight:900;">VERACITIZ 15 YEARS CELEBRATION</p>
+        <p style="font-size:20px;">📅 Date: 7th August</p>
+        <p style="font-size:20px;">📍 Venue: Nashik</p>
+        <p style="color:gold;font-size:18px;font-weight:bold;">
+            Lights • Drama • Dance • Celebration • Legacy 🎭
+        </p>
+    </div>
+</div>
+
+<script>
+
+let count = 5;
+
+const messages = {
+    5: "💥 “Picture abhi baaki hai mere dost…”",
+    4: "🔥 “Bade bade shehron mein aisi chhoti baatein hoti rehti hai…”",
+    3: "🎬 “Lights… Camera… Action…”",
+    2: "🚨 “Yeh sirf trailer nahi, ek dhamaka hai…”",
+    1: "⚡ “Ab hoga asli reveal…”"
+};
+
+function startCountdown() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("countdown").style.display = "flex";
+
+    let interval = setInterval(() => {
+        document.getElementById("count").innerText = count;
+        document.getElementById("msg").innerText = messages[count];
+
+        if (count === 1) {
+            clearInterval(interval);
+            setTimeout(showCurtain, 2000);
+        }
+
+        count--;
+    }, 2000);
+}
+
+function createPaper() {
+    for (let i = 0; i < 150; i++) {
+        let c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * window.innerWidth + "px";
+        c.style.background = ["red","gold","white","orange"][Math.floor(Math.random()*4)];
+        c.style.animationDuration = (Math.random()*3 + 2) + "s";
+        document.body.appendChild(c);
+    }
+}
+
+function showCurtain() {
+    document.getElementById("countdown").style.display = "none";
+    document.getElementById("curtainPage").style.display = "block";
+
+    setTimeout(() => {
+        document.getElementById("curtainPage").classList.add("open");
+        createPaper();
+    }, 600);
+}
+
+</script>
+
+</body>
+</html>
